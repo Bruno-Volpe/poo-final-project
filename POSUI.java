@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class POSUI extends JFrame {
     private Inventory inventory;
     private Order currentOrder;
     private JTextArea orderDetails;
     private JTextArea inventoryDetails;
+    private DecimalFormat df = new DecimalFormat("#.00");
 
     public POSUI() {
         inventory = new Inventory();
@@ -15,11 +17,6 @@ public class POSUI extends JFrame {
         orderDetails = new JTextArea(10, 30);
         inventoryDetails = new JTextArea(10, 30);
         setupUI();
-        // Sample inventory for testing
-        inventory.addProduct("Coffee", 2.5, 10);
-        inventory.addProduct("Tea", 1.5, 20);
-        inventory.addProduct("Sandwich", 5.0, 15);
-        updateInventoryDetails();
     }
 
     private void setupUI() {
@@ -27,7 +24,7 @@ public class POSUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // North Panel for buttons
+        // Painel norte para os botões
         JPanel northPanel = new JPanel();
         JButton addInventoryButton = new JButton("Adicionar ao Estoque");
         JButton addButton = new JButton("Adicionar à Comanda");
@@ -41,7 +38,7 @@ public class POSUI extends JFrame {
         northPanel.add(completeButton);
         add(northPanel, BorderLayout.NORTH);
 
-        // Center Panel for order details and inventory
+        // Painel central para detalhes da comanda e inventário
         JPanel centerPanel = new JPanel(new GridLayout(2, 1));
         orderDetails.setEditable(false);
         inventoryDetails.setEditable(false);
@@ -49,7 +46,7 @@ public class POSUI extends JFrame {
         centerPanel.add(new JScrollPane(inventoryDetails));
         add(centerPanel, BorderLayout.CENTER);
 
-        // Add Action Listeners
+        // Adiciona ActionListeners aos botões
         addInventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,14 +87,51 @@ public class POSUI extends JFrame {
         setVisible(true);
     }
 
-    private void addItem() {
+    // Adiciona um item ao estoque
+    private void addInventory() {
         String name = JOptionPane.showInputDialog(this, "Digite o nome do produto:");
-        if (name == null || name.isEmpty()) {
-            return; // User canceled or entered invalid input
+        if (name == null || name.trim().isEmpty()) {
+            return; // Usuário cancelou ou inseriu entrada inválida
+        }
+        double price;
+        try {
+            String priceInput = JOptionPane.showInputDialog(this, "Digite o preço do produto:");
+            if (priceInput == null || priceInput.trim().isEmpty()) {
+                return; // Usuário cancelou ou inseriu entrada inválida
+            }
+            price = Double.parseDouble(priceInput);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Preço inválido.");
+            return;
         }
         int quantity;
         try {
-            quantity = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite a quantidade:"));
+            String quantityInput = JOptionPane.showInputDialog(this, "Digite a quantidade:");
+            if (quantityInput == null || quantityInput.trim().isEmpty()) {
+                return; // Usuário cancelou ou inseriu entrada inválida
+            }
+            quantity = Integer.parseInt(quantityInput);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Quantidade inválida.");
+            return;
+        }
+        inventory.addProduct(name, price, quantity);
+        updateInventoryDetails();
+    }
+
+    // Adiciona um item à comanda
+    private void addItem() {
+        String name = JOptionPane.showInputDialog(this, "Digite o nome do produto:");
+        if (name == null || name.trim().isEmpty()) {
+            return; // Usuário cancelou ou inseriu entrada inválida
+        }
+        int quantity;
+        try {
+            String quantityInput = JOptionPane.showInputDialog(this, "Digite a quantidade:");
+            if (quantityInput == null || quantityInput.trim().isEmpty()) {
+                return; // Usuário cancelou ou inseriu entrada inválida
+            }
+            quantity = Integer.parseInt(quantityInput);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Quantidade inválida.");
             return;
@@ -112,14 +146,19 @@ public class POSUI extends JFrame {
         }
     }
 
+    // Remove um item da comanda
     private void removeItemFromOrder() {
         String name = JOptionPane.showInputDialog(this, "Digite o nome do produto para remover da comanda:");
-        if (name == null || name.isEmpty()) {
-            return; // User canceled or entered invalid input
+        if (name == null || name.trim().isEmpty()) {
+            return; // Usuário cancelou ou inseriu entrada inválida
         }
         int quantity;
         try {
-            quantity = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite a quantidade para remover:"));
+            String quantityInput = JOptionPane.showInputDialog(this, "Digite a quantidade para remover:");
+            if (quantityInput == null || quantityInput.trim().isEmpty()) {
+                return; // Usuário cancelou ou inseriu entrada inválida
+            }
+            quantity = Integer.parseInt(quantityInput);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Quantidade inválida.");
             return;
@@ -138,10 +177,11 @@ public class POSUI extends JFrame {
         }
     }
 
+    // Remove um item do estoque
     private void removeItemFromInventory() {
         String name = JOptionPane.showInputDialog(this, "Digite o nome do produto para remover do estoque:");
-        if (name == null || name.isEmpty()) {
-            return; // User canceled or entered invalid input
+        if (name == null || name.trim().isEmpty()) {
+            return; // Usuário cancelou ou inseriu entrada inválida
         }
         if (inventory.removeProduct(name)) {
             updateInventoryDetails();
@@ -150,46 +190,27 @@ public class POSUI extends JFrame {
         }
     }
 
+    // Fecha a conta aplicando impostos e arredonda para 2 casas decimais
     private void completeOrder() {
         currentOrder.applyTaxes();
-        JOptionPane.showMessageDialog(this, "Total com impostos: $" + currentOrder.getTotalCost());
+        String totalCost = df.format(currentOrder.getTotalCost());
+        JOptionPane.showMessageDialog(this, "Total com impostos: $" + totalCost);
         currentOrder.generateReceipt();
         currentOrder = new Order();
         orderDetails.setText("");
     }
 
-    private void addInventory() {
-        String name = JOptionPane.showInputDialog(this, "Digite o nome do produto:");
-        if (name == null || name.isEmpty()) {
-            return; // User canceled or entered invalid input
-        }
-        double price;
-        try {
-            price = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite o preço do produto:"));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Preço inválido.");
-            return;
-        }
-        int quantity;
-        try {
-            quantity = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite a quantidade:"));
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Quantidade inválida.");
-            return;
-        }
-        inventory.addProduct(name, price, quantity);
-        updateInventoryDetails();
-    }
-
+    // Atualiza os detalhes da comanda na interface
     private void updateOrderDetails() {
         StringBuilder orderText = new StringBuilder();
         for (Product item : currentOrder.getItems()) {
             orderText.append(item.getName()).append(" x ").append(item.getQuantity()).append(" - $").append(item.getPrice() * item.getQuantity()).append("\n");
         }
-        orderText.append("Total: $").append(currentOrder.getTotalCost());
+        orderText.append("Total: $").append(df.format(currentOrder.getTotalCost()));
         orderDetails.setText(orderText.toString());
     }
 
+    // Atualiza os detalhes do estoque na interface
     private void updateInventoryDetails() {
         StringBuilder inventoryText = new StringBuilder();
         for (Product product : inventory.getProducts().values()) {

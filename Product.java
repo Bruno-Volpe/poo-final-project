@@ -9,7 +9,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    // Getters and setters
+    // Getters e setters
     public String getName() { return name; }
     public double getPrice() { return price; }
     public int getQuantity() { return quantity; }

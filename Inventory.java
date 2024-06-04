@@ -8,14 +8,17 @@ public class Inventory {
         this.products = new HashMap<>();
     }
 
+    // Adiciona um novo produto ao estoque
     public void addProduct(String name, double price, int quantity) {
         products.put(name, new Product(name, price, quantity));
     }
 
+    // Retorna um produto com base no nome
     public Product getProduct(String name) {
         return products.get(name);
     }
 
+    // Remove um produto do estoque
     public boolean removeProduct(String name) {
         if (products.containsKey(name)) {
             products.remove(name);
@@ -24,22 +27,8 @@ public class Inventory {
         return false;
     }
 
-    public void updateProduct(String name, int quantity) {
-        if (products.containsKey(name)) {
-            Product product = products.get(name);
-            product.setQuantity(quantity);
-        }
-    }
-
+    // Retorna todos os produtos no estoque
     public Map<String, Product> getProducts() {
         return products;
-    }
-
-    public void checkLowStock() {
-        for (Product product : products.values()) {
-            if (product.getQuantity() < 5) {
-                System.out.println("Low stock alert: " + product.getName());
-            }
-        }
     }
 }
