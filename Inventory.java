@@ -16,6 +16,14 @@ public class Inventory {
         return products.get(name);
     }
 
+    public boolean removeProduct(String name) {
+        if (products.containsKey(name)) {
+            products.remove(name);
+            return true;
+        }
+        return false;
+    }
+
     public void updateProduct(String name, int quantity) {
         if (products.containsKey(name)) {
             Product product = products.get(name);

@@ -16,8 +16,31 @@ public class Order {
         totalCost += product.getPrice() * quantity;
     }
 
+    public boolean removeItem(String name, int quantity) {
+        for (Product item : items) {
+            if (item.getName().equals(name) && item.getQuantity() >= quantity) {
+                item.setQuantity(item.getQuantity() - quantity);
+                totalCost -= item.getPrice() * quantity;
+                if (item.getQuantity() == 0) {
+                    items.remove(item);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     public double getTotalCost() {
         return totalCost;
+    }
+
+    public double getProductPrice(String name) {
+        for (Product item : items) {
+            if (item.getName().equals(name)) {
+                return item.getPrice();
+            }
+        }
+        return 0;
     }
 
     public List<Product> getItems() {
@@ -31,8 +54,7 @@ public class Order {
     public void generateReceipt() {
         System.out.println("Receipt:");
         for (Product item : items) {
-            System.out.println(
-                    item.getName() + " x " + item.getQuantity() + " - $" + item.getPrice() * item.getQuantity());
+            System.out.println(item.getName() + " x " + item.getQuantity() + " - $" + item.getPrice() * item.getQuantity());
         }
         System.out.println("Total: $" + totalCost);
     }
