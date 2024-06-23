@@ -1,71 +1,171 @@
-### Manual do Usuário para o Sistema POS Java Café
+```markdown
+# Project Report: Sistema POS Java Café
 
-#### Visão Geral
-O Sistema POS Java Café é uma aplicação simples de ponto de venda projetada para pequenos cafés. Ele permite que os usuários gerenciem o estoque, processem pedidos e calculem o custo total das compras, incluindo impostos. A aplicação possui uma interface gráfica (GUI) construída com Java Swing.
+## Grupo
+- Nome do Estudante 1 - Número USP 1
+- Nome do Estudante 2 - Número USP 2
+- Nome do Estudante 3 - Número USP 3
 
-#### Instalação
-1. Certifique-se de ter o Java Development Kit (JDK) instalado no seu computador.
-2. Baixe os arquivos de código-fonte e compile-os usando seu IDE preferido ou linha de comando.
+## 1. Requirements
+Os requisitos são fornecidos na tarefa, mas adicionamos novos requisitos necessários para nossa implementação específica.
 
-#### Executando a Aplicação
-Para iniciar a aplicação, execute a classe `Main`. Isso abrirá a janela principal do sistema POS.
+### Requisitos Originais
+- Gerenciamento de estoque.
+- Processamento de pedidos.
+- Cálculo do custo total das compras, incluindo impostos.
+- Interface gráfica para interação do usuário.
 
-#### Interface Principal
-A janela principal do sistema POS possui os seguintes componentes:
-- **Botões**: Localizados na parte superior da janela, esses botões permitem que você execute várias ações.
-- **Detalhes do Pedido**: Exibido no lado esquerdo da janela, esta área mostra os itens atuais no pedido.
-- **Detalhes do Estoque**: Exibido no lado direito da janela, esta área mostra os itens atuais no estoque.
+### Requisitos Adicionais
+- Suporte para salvar e carregar dados de inventário e pedidos em arquivos de texto (`.txt`).
+- Interface gráfica aprimorada com botões para criar, adicionar, remover e fechar comandas.
 
-#### Botões e Suas Funções
-1. **Adicionar ao Estoque**: Adicionar itens ao estoque.
-2. **Adicionar à Comanda**: Adicionar itens do estoque ao pedido.
-3. **Deletar da Comanda**: Remover itens do pedido atual.
-4. **Deletar do Estoque**: Remover itens do estoque.
-5. **Fechar a Conta**: Calcular o custo total do pedido atual, incluindo impostos, e exibir um recibo.
+## 2. Project Description
+Nosso projeto implementa as funcionalidades principais do Sistema POS Java Café, conforme descrito nos requisitos. A interface gráfica é construída utilizando Java Swing, e os dados de inventário e pedidos são armazenados em arquivos de texto para persistência entre sessões.
 
-### Instruções Detalhadas
+### Implementação das Funcionalidades
+- **Main**: Classe principal que inicia a aplicação.
+- **POSUI**: Classe que define a interface gráfica e a lógica de interação com o usuário.
+- **Inventory**: Classe que gerencia o inventário de produtos.
+- **Order**: Classe que gerencia os pedidos (comandas).
+- **Product**: Classe que representa um produto no inventário ou no pedido.
 
-#### Adicionando Itens ao Estoque
+## 3. Comments About the Code
+### Main
+A classe `Main` é o ponto de entrada do aplicativo. Ela contém o método `main` que inicializa a interface gráfica chamando o construtor da classe `POSUI`.
+
+### POSUI
+A classe `POSUI` é responsável por toda a interface gráfica e lógica de interação com o usuário. Aqui estão alguns detalhes importantes:
+- **Componentes Gráficos**: Utiliza componentes Swing como `JButton`, `JTextArea`, `JTabbedPane` e `JScrollPane` para construir a interface do usuário.
+- **Métodos de Configuração**: `setupUI` configura o layout inicial da janela principal e adiciona botões e áreas de texto.
+- **Carregamento e Salvamento de Dados**: Métodos `loadInventory` e `loadOrders` carregam dados de arquivos de texto, enquanto `saveInventory` e `saveOrders` salvam os dados atuais em arquivos de texto.
+- **Interação com o Usuário**: Métodos como `addInventory`, `addItem`, `removeItemFromOrder` e `removeItemFromInventory` são acionados por botões e manipulam as interações do usuário com a aplicação.
+
+### Inventory
+A classe `Inventory` gerencia um mapa de produtos. 
+- **Adição e Remoção de Produtos**: Métodos `addProduct` e `removeProduct` permitem adicionar e remover produtos do inventário.
+- **Acesso aos Produtos**: O método `getProduct` retorna um produto específico, enquanto `getProducts` retorna todos os produtos no inventário.
+
+### Order
+A classe `Order` gerencia a lista de itens do pedido.
+- **Adição e Remoção de Itens**: Métodos `addItem` e `removeItem` permitem adicionar e remover produtos do pedido.
+- **Cálculo do Custo**: O método `getTotalCost` retorna o custo total do pedido, e `applyTaxes` aplica um imposto de 10% ao total.
+- **Geração de Recibo**: O método `generateReceipt` imprime um recibo no console.
+
+### Product
+A classe `Product` representa um produto com nome, preço e quantidade.
+- **Métodos de Acesso**: Métodos `getName`, `getPrice` e `getQuantity` permitem acesso às propriedades do produto.
+- **Métodos de Modificação**: O método `setQuantity` permite modificar a quantidade do produto.
+
+## 4. Test Plan
+### Testes Manuais
+#### Adicionar ao Estoque
 1. Clique no botão `Adicionar ao Estoque`.
-2. Digite o nome do produto na caixa de diálogo de entrada e clique em `OK`.
-3. Digite o preço do produto na próxima caixa de diálogo de entrada e clique em `OK`.
-4. Digite a quantidade do produto na última caixa de diálogo de entrada e clique em `OK`.
-5. O novo item será adicionado ao estoque e exibido na área de Detalhes do Estoque.
+2. Insira o nome, preço e quantidade do produto.
+3. Verifique se o produto é adicionado corretamente ao inventário.
 
-#### Adicionando Itens ao Pedido
+#### Adicionar à Comanda
 1. Clique no botão `Adicionar à Comanda`.
-2. Digite o nome do produto na caixa de diálogo de entrada e clique em `OK`.
-3. Digite a quantidade do produto na próxima caixa de diálogo de entrada e clique em `OK`.
-4. Se o produto existir no estoque e houver quantidade suficiente, ele será adicionado ao pedido e exibido na área de Detalhes do Pedido.
+2. Insira o nome e a quantidade do produto.
+3. Verifique se o produto é adicionado corretamente à comanda.
 
-#### Removendo Itens do Pedido
+#### Remover da Comanda
 1. Clique no botão `Deletar da Comanda`.
-2. Digite o nome do produto a ser removido na caixa de diálogo de entrada e clique em `OK`.
-3. Digite a quantidade do produto a ser removido na próxima caixa de diálogo de entrada e clique em `OK`.
-4. Se o produto existir no pedido e a quantidade for válida, ele será removido do pedido e retornado ao estoque. Os detalhes atualizados do pedido e do estoque serão exibidos.
+2. Insira o nome e a quantidade do produto a ser removido.
+3. Verifique se o produto é removido corretamente da comanda e adicionado de volta ao inventário.
 
-#### Removendo Itens do Estoque
-1. Clique no botão `Deletar do Estoque`.
-2. Digite o nome do produto a ser removido na caixa de diálogo de entrada e clique em `OK`.
-3. Se o produto existir no estoque, ele será removido. Os detalhes atualizados do estoque serão exibidos.
+#### Fechar Comanda
+1. Clique no botão `Fechar Comanda Atual`.
+2. Verifique se o custo total, incluindo impostos, é calculado e exibido corretamente.
+3. Verifique se o pedido é limpo após o fechamento.
 
-#### Fechando a Conta
-1. Clique no botão `Fechar a Conta`.
-2. O sistema calculará o custo total do pedido, incluindo um imposto de 10%.
-3. Uma caixa de diálogo exibirá o custo total com impostos arredondado para duas casas decimais.
-4. Os detalhes do pedido serão limpos e um recibo será gerado e impresso no console.
+### Testes Automatizados
+#### Testes de Unidade com JUnit
+- **Teste de Adição de Produto ao Estoque**
+  ```java
+  @Test
+  public void testAddProduct() {
+      Inventory inventory = new Inventory();
+      inventory.addProduct("Café", 10.0, 5);
+      assertNotNull(inventory.getProduct("Café"));
+      assertEquals(5, inventory.getProduct("Café").getQuantity());
+  }
+  ```
 
-### Tratamento de Erros
-- Se você inserir dados inválidos (por exemplo, valores não numéricos para preço ou quantidade), uma mensagem de erro será exibida.
-- Se você cancelar qualquer caixa de diálogo de entrada, a operação será abortada e nenhuma alteração será feita.
+- **Teste de Remoção de Produto do Estoque**
+  ```java
+  @Test
+  public void testRemoveProduct() {
+      Inventory inventory = new Inventory();
+      inventory.addProduct("Café", 10.0, 5);
+      inventory.removeProduct("Café");
+      assertNull(inventory.getProduct("Café"));
+  }
+  ```
 
-### Dicas
-- Sempre verifique a área de Detalhes do Estoque para garantir que você tem estoque suficiente antes de adicionar itens ao pedido.
-- Use a área de Detalhes do Pedido para revisar o pedido atual antes de fechar a conta para garantir que todos os itens estão corretos.
+- **Teste de Adição de Item à Comanda**
+  ```java
+  @Test
+  public void testAddItemToOrder() {
+      Order order = new Order();
+      Product product = new Product("Café", 10.0, 5);
+      order.addItem(product, 2);
+      assertEquals(2, order.getItems().get(0).getQuantity());
+  }
+  ```
 
-### Solução de Problemas
-- **Aplicação não inicia**: Certifique-se de que você tem o JDK instalado e o código-fonte foi corretamente compilado.
-- **NullPointerException**: Certifique-se de que todas as caixas de diálogo de entrada são completadas ou canceladas corretamente para evitar valores nulos.
-- **Erros de entrada inválida**: Verifique novamente se você está inserindo valores numéricos onde necessário (preço e quantidade).
+- **Teste de Remoção de Item da Comanda**
+  ```java
+  @Test
+  public void testRemoveItemFromOrder() {
+      Order order = new Order();
+      Product product = new Product("Café", 10.0, 5);
+      order.addItem(product, 2);
+      order.removeItem("Café", 1);
+      assertEquals(1, order.getItems().get(0).getQuantity());
+  }
+  ```
 
-Este manual do usuário deve ajudá-lo a operar o Sistema POS Java Café de forma eficaz. Se você encontrar algum problema, consulte a seção de solução de problemas ou procure assistência.
+- **Teste de Cálculo de Custo Total**
+  ```java
+  @Test
+  public void testGetTotalCost() {
+      Order order = new Order();
+      Product product = new Product("Café", 10.0, 5);
+      order.addItem(product, 2);
+      assertEquals(20.0, order.getTotalCost(), 0.01);
+  }
+  ```
+
+## 5. Test Results
+### Testes Manuais
+Todos os testes manuais foram realizados com sucesso, confirmando que as funcionalidades básicas estão operacionais conforme esperado.
+
+### Testes Automatizados
+Os testes automatizados ainda estão em desenvolvimento. Resultados preliminares indicam que as funções de manipulação de dados estão funcionando corretamente.
+
+## 6. Build Procedures
+### Requisitos de Software
+- Java Development Kit (JDK)
+
+### Passos para Construção e Execução
+1. Instalar o JDK.
+2. Baixar o código-fonte do projeto.
+3. Compilar o código usando um IDE (como IntelliJ ou Eclipse) ou linha de comando:
+   ```bash
+   javac Main.java
+   ```
+4. Executar a aplicação:
+   ```bash
+   java Main
+   ```
+5. A interface gráfica será aberta, permitindo a interação com o sistema POS.
+
+## 7. Problems
+### Principais Problemas
+- **NullPointerException**: Inicialmente enfrentamos problemas com `NullPointerException` devido à ordem de inicialização dos componentes. Resolvido inicializando todos os componentes gráficos antes de carregar os dados.
+- **Tratamento de Entrada**: Garantir que todas as entradas do usuário fossem válidas e tratadas corretamente exigiu a implementação de várias verificações e tratamento de exceções.
+
+## 8. Comments
+### Comentários Adicionais
+O projeto fornece uma base sólida para um sistema POS básico, com possibilidade de expansão futura para incluir funcionalidades adicionais, como relatórios de vendas e integração com sistemas de pagamento. A experiência foi enriquecedora e proporcionou uma compreensão mais profunda do desenvolvimento de interfaces gráficas e manipulação de dados em Java.
+```

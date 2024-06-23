@@ -65,4 +65,29 @@ public class Order {
         }
         System.out.println("Total: $" + totalCost);
     }
+
+    // Salva a comanda em um formato de texto
+    public String toText() {
+        StringBuilder builder = new StringBuilder();
+        for (Product item : items) {
+            builder.append(item.getName()).append(",").append(item.getPrice()).append(",").append(item.getQuantity()).append("\n");
+        }
+        return builder.toString();
+    }
+
+    // Carrega a comanda de um formato de texto
+    public void fromText(String text) {
+        items.clear();
+        totalCost = 0;
+        String[] lines = text.split("\n");
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length < 3) continue; // Ignora linhas mal formadas
+            String name = parts[0];
+            double price = Double.parseDouble(parts[1]);
+            int quantity = Integer.parseInt(parts[2]);
+            items.add(new Product(name, price, quantity));
+            totalCost += price * quantity;
+        }
+    }
 }
