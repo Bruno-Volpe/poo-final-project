@@ -7,15 +7,10 @@
 - Nome do Estudante 3 - Número USP 3
 
 ## 1. Requirements
-Os requisitos são fornecidos na tarefa, mas adicionamos novos requisitos necessários para nossa implementação específica.
-
-### Requisitos Originais
 - Gerenciamento de estoque.
 - Processamento de pedidos.
 - Cálculo do custo total das compras, incluindo impostos.
 - Interface gráfica para interação do usuário.
-
-### Requisitos Adicionais
 - Suporte para salvar e carregar dados de inventário e pedidos em arquivos de texto (`.txt`).
 - Interface gráfica aprimorada com botões para criar, adicionar, remover e fechar comandas.
 
