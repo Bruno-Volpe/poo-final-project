@@ -1,3 +1,5 @@
+Desculpe pela confusão anterior. Aqui está o README completo no formato Markdown:
+
 ```markdown
 # Project Report: Sistema POS Java Café
 
@@ -73,70 +75,53 @@ A classe `Product` representa um produto com nome, preço e quantidade.
 2. Verifique se o custo total, incluindo impostos, é calculado e exibido corretamente.
 3. Verifique se o pedido é limpo após o fechamento.
 
-### Testes Automatizados
-#### Testes de Unidade com JUnit
-- **Teste de Adição de Produto ao Estoque**
-  ```java
-  @Test
-  public void testAddProduct() {
-      Inventory inventory = new Inventory();
-      inventory.addProduct("Café", 10.0, 5);
-      assertNotNull(inventory.getProduct("Café"));
-      assertEquals(5, inventory.getProduct("Café").getQuantity());
-  }
-  ```
+#### Modificação de Quantidade no Estoque
+1. Clique no botão `Adicionar ao Estoque`.
+2. Insira o nome, preço e quantidade do produto.
+3. Verifique se o produto é adicionado corretamente ao inventário com a quantidade especificada.
 
-- **Teste de Remoção de Produto do Estoque**
-  ```java
-  @Test
-  public void testRemoveProduct() {
-      Inventory inventory = new Inventory();
-      inventory.addProduct("Café", 10.0, 5);
-      inventory.removeProduct("Café");
-      assertNull(inventory.getProduct("Café"));
-  }
-  ```
+4. Clique no botão `Adicionar ao Estoque` novamente para o mesmo produto.
+5. Insira a mesma quantidade ou uma quantidade diferente.
+6. Verifique se a quantidade do produto no inventário é atualizada corretamente.
 
-- **Teste de Adição de Item à Comanda**
-  ```java
-  @Test
-  public void testAddItemToOrder() {
-      Order order = new Order();
-      Product product = new Product("Café", 10.0, 5);
-      order.addItem(product, 2);
-      assertEquals(2, order.getItems().get(0).getQuantity());
-  }
-  ```
+#### Remoção Completa de Produto do Estoque
+1. Clique no botão `Adicionar ao Estoque`.
+2. Insira o nome, preço e quantidade do produto.
+3. Verifique se o produto é adicionado corretamente ao inventário.
 
-- **Teste de Remoção de Item da Comanda**
-  ```java
-  @Test
-  public void testRemoveItemFromOrder() {
-      Order order = new Order();
-      Product product = new Product("Café", 10.0, 5);
-      order.addItem(product, 2);
-      order.removeItem("Café", 1);
-      assertEquals(1, order.getItems().get(0).getQuantity());
-  }
-  ```
+4. Clique no botão `Deletar do Estoque`.
+5. Insira o nome do produto a ser removido completamente.
+6. Verifique se o produto é removido completamente do inventário.
 
-- **Teste de Cálculo de Custo Total**
-  ```java
-  @Test
-  public void testGetTotalCost() {
-      Order order = new Order();
-      Product product = new Product("Café", 10.0, 5);
-      order.addItem(product, 2);
-      assertEquals(20.0, order.getTotalCost(), 0.01);
-  }
-  ```
+#### Atualização e Fechamento de Comanda
+1. Adicione alguns itens à comanda usando o botão `Adicionar à Comanda`.
+2. Verifique se os itens são listados corretamente na comanda.
+
+3. Modifique a quantidade de um item na comanda usando o botão `Editar Comanda`.
+4. Insira o nome do produto e a nova quantidade.
+5. Verifique se a quantidade do item na comanda é atualizada corretamente.
+
+6. Feche a comanda usando o botão `Fechar Comanda Atual`.
+7. Verifique se o custo total, incluindo impostos, é calculado corretamente e exibido na interface.
+8. Verifique se a comanda é limpa após o fechamento, ou seja, não contém mais nenhum item.
+
+### Testes de Verificação de Erros
+
+#### Verificação de Entradas Inválidas
+1. Tente adicionar um produto sem especificar todos os campos necessários (nome, preço, quantidade).
+2. Verifique se a aplicação impede a adição do produto e exibe uma mensagem de erro adequada.
+
+3. Tente fechar uma comanda sem adicionar nenhum item.
+4. Verifique se a aplicação impede o fechamento da comanda e exibe uma mensagem de erro adequada.
+
+#### Teste de Resiliência
+1. Simule uma falha na leitura dos arquivos de dados (inventário e pedidos) durante a inicialização da aplicação.
+2. Verifique se a aplicação lida corretamente com a falha e apresenta uma mensagem de erro ao usuário.
 
 ## 5. Test Results
-### Testes Manuais
-Todos os testes manuais foram realizados com sucesso, confirmando que as funcionalidades básicas estão operacionais conforme esperado.
 
-### Testes Automatizados
-Os testes automatizados ainda estão em desenvolvimento. Resultados preliminares indicam que as funções de manipulação de dados estão funcionando corretamente.
+### Testes Manuais
+Todos os testes manuais foram realizados com sucesso, confirmando que as funcionalidades básicas e os cenários de erro estão operacionais conforme esperado.
 
 ## 6. Build Procedures
 ### Requisitos de Software
@@ -162,5 +147,6 @@ Os testes automatizados ainda estão em desenvolvimento. Resultados preliminares
 
 ## 8. Comments
 ### Comentários Adicionais
-O projeto fornece uma base sólida para um sistema POS básico, com possibilidade de expansão futura para incluir funcionalidades adicionais, como relatórios de vendas e integração com sistemas de pagamento. A experiência foi enriquecedora e proporcionou uma compreensão mais profunda do desenvolvimento de interfaces gráficas e manipulação de dados em Java.
-```
+O projeto fornece uma base sólida para um sistema POS básico, com possibilidade de expansão futura para incluir funcionalidades adicionais, como relatórios de vendas e integração com sistemas de pagamento. A experiência foi enriquecedora e proporcionou uma
+
+ compreensão mais profunda de desenvolvimento de aplicativos desktop em Java.
