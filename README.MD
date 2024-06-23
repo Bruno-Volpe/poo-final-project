@@ -1,6 +1,3 @@
-Desculpe pela confusão anterior. Aqui está o README completo no formato Markdown:
-
-```markdown
 # Project Report: Sistema POS Java Café
 
 ## Grupo
@@ -149,4 +146,4 @@ Todos os testes manuais foram realizados com sucesso, confirmando que as funcion
 ### Comentários Adicionais
 O projeto fornece uma base sólida para um sistema POS básico, com possibilidade de expansão futura para incluir funcionalidades adicionais, como relatórios de vendas e integração com sistemas de pagamento. A experiência foi enriquecedora e proporcionou uma
 
- compreensão mais profunda de desenvolvimento de aplicativos desktop em Java.
+compreensão mais profunda de desenvolvimento de aplicativos desktop em Java.
