@@ -1,9 +1,9 @@
 # Project Report: Sistema POS Java Café
 
 ## Grupo
-- Nome do Estudante 1 - Número USP 1
-- Nome do Estudante 2 - Número USP 2
-- Nome do Estudante 3 - Número USP 3
+- Bruno Giacomini Volpe - 14651980
+- Guilherme Xavier - 14575641
+- André Dalla Déa Trombini - 14558082
 
 ## 1. Requirements
 - Gerenciamento de estoque.

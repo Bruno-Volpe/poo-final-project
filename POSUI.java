@@ -295,9 +295,20 @@ public class POSUI extends JFrame {
     private void updateInventoryDetails() {
         StringBuilder inventoryText = new StringBuilder();
         for (Product product : inventory.getProducts().values()) {
-            inventoryText.append(product.getName()).append(" - ").append(product.getQuantity()).append(" em estoque - $").append(product.getPrice()).append("\n");
+            if (product.getQuantity() < 3) {
+                inventoryText.append(product.getName()).append(" - ").append(product.getQuantity()).append(" em estoque - $").append(product.getPrice()).append(" (ESTOQUE BAIXO)\n");
+            } else {
+                inventoryText.append(product.getName()).append(" - ").append(product.getQuantity()).append(" em estoque - $").append(product.getPrice()).append("\n");
+            }
         }
         inventoryDetails.setText(inventoryText.toString());
+
+        // Verifica se há itens com estoque baixo e avisa o usuário
+        for (Product product : inventory.getProducts().values()) {
+            if (product.getQuantity() < 3) {
+                JOptionPane.showMessageDialog(this, "Atenção: O estoque do produto \"" + product.getName() + "\" está baixo!");
+            }
+        }
     }
 
     private void saveInventory() {
